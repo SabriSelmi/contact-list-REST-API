@@ -1,25 +1,27 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {Switch, Route, NavLink, Redirect} from "react-router-dom";
+import ContactList from "./components/contactlist";
+import AddContact from "./components/addcontact";
+import UpdateContact from "./components/update";
+
+
 
 class App extends Component {
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+          <h1 className="text-center mb-5 text-dark"> Contact List</h1>
+          <NavLink to='/contact-list'> <button className="btn btn-dark bg-dark"> Contact List </button> </NavLink>
+          <NavLink to='/add-contact'> <button className="btn btn-dark bg-dark"> Add Contact </button> </NavLink>
+
+          <Switch>
+            <Route exact path="/contact-list" render={props=><ContactList body={props.match}/>}/>
+            <Route path="/add-contact" component={AddContact}/>
+            <Route path="/modify-contact/:id" render={props=><UpdateContact id={props.match.params.id}/>}/>
+            <Route path="/contact-list/:id" render={()=><Redirect to="/contact-list"/>}/>
+          </Switch>
       </div>
     );
   }
